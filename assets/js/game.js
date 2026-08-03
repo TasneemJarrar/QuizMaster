@@ -1,9 +1,10 @@
-const question = document.querySelector("#question");
+const question = document.querySelector(".question");
 const choice = document.querySelector(".choice");
 const choices = document.querySelectorAll(".choice_text");
-const progressText = document.querySelector("#progressText");
-const scoreText = document.querySelector("#score");
-const progressBarFull = document.querySelector("#progressBarFull");
+const progressText = document.querySelector(".progressText");
+const scoreText = document.querySelector(".score");
+const progressBarFull = document.querySelector(".progressBarFull");
+const nextBtn = document.querySelector(".nextBtn");
 
 let currentQuestion = {};
 let acceptingAnswer = true;
@@ -233,19 +234,30 @@ choices.forEach((choice) => {
 
     acceptingAnswer = false;
     const selectedChoice = e.target;
-const selectedAnswer = parseInt(selectedChoice.dataset.number);
-    let cssToApply = selectedAnswer === currentQuestion.answer ? "isCorrect": "isNotCorrect";
+    const selectedAnswer = parseInt(selectedChoice.dataset.number);
+    let cssToApply =
+      selectedAnswer === currentQuestion.answer ? "isCorrect" : "isNotCorrect";
 
-    
-    if (cssToApply === 'isCorrect') {
+    if (cssToApply === "isCorrect") {
       incrementScore(SCORE_POINTS);
+      selectedChoice.parentElement.classList.add(cssToApply);
+    } else {
+      selectedChoice.parentElement.classList.add(cssToApply);
+      choices.forEach((choice) => {
+        if (parseInt(choice.dataset.number) === currentQuestion.answer) {
+          choice.parentElement.classList.add("isCorrect");
+        }
+      });
     }
-    selectedChoice.parentElement.classList.add(cssToApply);
-    
-    setTimeout(() => {
-      selectedChoice.parentElement.classList.remove(cssToApply);
+
+    nextBtn.classList.remove("hidden");
+    nextBtn.addEventListener("click", () => {
+      choices.forEach((choice) => {
+        choice.parentElement.classList.remove("isCorrect", "isNotCorrect");
+      });
+      nextBtn.classList.add("hidden");
       getNewQuestion();
-    }, 1000);
+    });
   });
 });
 
