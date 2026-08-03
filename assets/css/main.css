@@ -1,0 +1,10 @@
+.isCorrect{
+  border: oklch(76.8% 0.233 130.85);
+  background-color: oklch(93.8% 0.127 124.321);
+}
+
+
+.isNotCorrect{
+  border: oklch(63.7% 0.237 25.331);
+  background-color: oklch(88.5% 0.062 18.334);
+}
