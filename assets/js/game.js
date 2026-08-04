@@ -233,16 +233,21 @@ choices.forEach((choice) => {
     if (!acceptingAnswer) return;
 
     acceptingAnswer = false;
+
     const selectedChoice = e.target;
     const selectedAnswer = parseInt(selectedChoice.dataset.number);
+
     let cssToApply =
-      selectedAnswer === currentQuestion.answer ? "isCorrect" : "isNotCorrect";
+      selectedAnswer === currentQuestion.answer
+        ? "isCorrect"
+        : "isNotCorrect";
 
     if (cssToApply === "isCorrect") {
       incrementScore(SCORE_POINTS);
       selectedChoice.parentElement.classList.add(cssToApply);
     } else {
       selectedChoice.parentElement.classList.add(cssToApply);
+
       choices.forEach((choice) => {
         if (parseInt(choice.dataset.number) === currentQuestion.answer) {
           choice.parentElement.classList.add("isCorrect");
@@ -251,14 +256,16 @@ choices.forEach((choice) => {
     }
 
     nextBtn.classList.remove("hidden");
-    nextBtn.addEventListener("click", () => {
-      choices.forEach((choice) => {
-        choice.parentElement.classList.remove("isCorrect", "isNotCorrect");
-      });
-      nextBtn.classList.add("hidden");
-      getNewQuestion();
-    });
   });
+});
+
+
+nextBtn.addEventListener("click", () => {
+  choices.forEach((choice) => {
+    choice.parentElement.classList.remove("isCorrect", "isNotCorrect");
+  });
+  nextBtn.classList.add("hidden");
+  getNewQuestion();
 });
 
 const incrementScore = (num) => {
